@@ -1,13 +1,3 @@
----
-title: Sensante
-emoji: 🏥
-colorFrom: blue
-colorTo: green
-sdk: docker
-app_port: 8000
-pinned: false
----
-
 # SenSante
 Assistant pre-diagnostic medical pour le Senegal.
 
@@ -23,6 +13,3 @@ https://awaw08002-sensante.hf.space
 
 ## Auteur
 Awa War - L2 GLSI - ESP/UCAD - 2026
-
-## Cours
-Integration de Modeles IA - Dr. El Hadji Bassirou TOURE
