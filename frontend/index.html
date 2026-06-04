@@ -158,7 +158,7 @@
 
   <!-- JavaScript -->
   <script>
-    const API_URL = "http://localhost:8000";
+    const API_URL = "";
     const historique = [];
 
     async function diagnostiquer() {
@@ -213,19 +213,18 @@
     }
 
     function afficherResultat(r) {
-      // ✅ CORRECTION 1 : objet couleurs correctement fermé avec };
       const couleurs = {
         palu:   { bg: "bg-red-100",    text: "text-red-800",    bar: "bg-red-500",    badge: "bg-red-500"    },
         grippe: { bg: "bg-orange-100", text: "text-orange-800", bar: "bg-orange-500", badge: "bg-orange-500" },
         typh:   { bg: "bg-yellow-100", text: "text-yellow-800", bar: "bg-yellow-500", badge: "bg-yellow-500" },
         sain:   { bg: "bg-green-100",  text: "text-green-800",  bar: "bg-green-500",  badge: "bg-green-500"  }
-      }; // ← accolade fermante + point-virgule ajoutés ici
+      };
 
       const icones = {
-        palu: "🌡️",
+        palu:   "🌡️",
         grippe: "❄️",
-        typh: "⚠️",
-        sain: "✅"
+        typh:   "⚠️",
+        sain:   "✅"
       };
 
       const c = couleurs[r.diagnostic] || couleurs["sain"];
@@ -264,7 +263,6 @@
           </div>
         </div>`;
 
-      // ✅ CORRECTION 2 : appels placés après section.innerHTML, au bon niveau
       afficherHistorique();
       demanderExplication(r);
     }
@@ -306,8 +304,17 @@
                 Explication (Llama 3)</p>
               <p class="text-gray-700 text-sm leading-relaxed">
                 ${result.explication}</p>
+            </div>
+            <div class="mt-4 bg-red-50 rounded-lg p-4 border border-red-300">
+              <p class="text-red-700 font-medium text-sm">⚠️ AVERTISSEMENT</p>
+              <p class="text-red-600 text-sm mt-1">
+                Ce diagnostic et cette explication sont generes par une IA
+                et ne remplacent PAS un avis medical. Consultez
+                obligatoirement un professionnel de sante.
+              </p>
             </div>`;
         }
+
       } catch (error) {
         explDiv.innerHTML = `
           <div class="mt-4 bg-gray-50 rounded-lg p-3">

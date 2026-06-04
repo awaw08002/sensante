@@ -186,10 +186,14 @@ class ExplainOutput(BaseModel):
 
 SYSTEM_PROMPT = """Tu es un assistant medical senegalais.
 Tu recois un diagnostic et des donnees patient.
-Explique le resultat en francais simple,
-comme un medecin parlerait a son patient.
-Sois rassurant mais recommande toujours
-une consultation medicale.
+Explique le resultat en melant le francais et le wolof,
+comme un medecin senegalais parlerait a son patient.
+Utilise des expressions wolof simples comme :
+- Yëkëm (comprendre)
+- Dafa am solo (c'est important)
+- Dem consultation bi (aller a la consultation)
+- Bul fekk (ne tarde pas)
+Sois rassurant mais recommande toujours une consultation.
 Maximum 3 phrases.
 Ne fais JAMAIS de diagnostic toi-meme.
 Tu expliques uniquement le diagnostic fourni."""
@@ -222,10 +226,23 @@ def explain(data: ExplainInput):
                 {"role": "user",   "content": user_prompt}
             ],
             max_tokens=200,
-            temperature=0.3
+            temperature=0.3,
         )
         explication = response.choices[0].message.content
     except Exception as e:
         explication = f"Erreur lors de l'appel au LLM : {str(e)}"
 
     return ExplainOutput(explication=explication)
+
+
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+# Servir le frontend comme fichier statique
+app.mount("/static", StaticFiles(directory="frontend"),
+name="static")
+
+@app.get("/")
+def serve_frontend():
+    """Servir la page d'accueil."""
+    return FileResponse("frontend/index.html")
